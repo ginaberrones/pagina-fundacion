@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fundación GESAS – Gestión del Agua y Sostenibilidad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep: #1a3d2b;
+      --green-mid: #2d6a4f;
+      --green-light: #52b788;
+      --green-pale: #b7e4c7;
+      --sand: #f4ede4;
+      --sand-dark: #e6d9cc;
+      --water: #0077b6;
+      --water-light: #90e0ef;
+      --cream: #faf7f2;
+      --charcoal: #1c1c1e;
+      --text-mid: #3d4a3e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      background: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(26,61,43,0.95);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--green-pale);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--water-light); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a {
+      text-decoration: none; color: #c8dfc8;
+      font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    nav ul a:hover { color: var(--green-pale); }
+    .nav-cta {
+      background: var(--green-light); color: var(--green-deep) !important;
+      padding: 0.5rem 1.4rem; border-radius: 100px;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--green-pale) !important; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 70% 40%, rgba(0,119,182,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(82,183,136,0.22) 0%, transparent 55%),
+        linear-gradient(160deg, var(--green-deep) 0%, #0f2a1c 100%);
+      display: flex; align-items: center;
+      padding: 0 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-circle {
+      position: absolute; border-radius: 50%; opacity: 0.06;
+      background: var(--green-light); pointer-events: none;
+    }
+    .hero-bg-circle.c1 { width: 600px; height: 600px; top: -150px; right: -100px; }
+    .hero-bg-circle.c2 { width: 400px; height: 400px; bottom: -100px; left: 10%; background: var(--water); }
+
+    .hero-content {
+      max-width: 720px; z-index: 2;
+      animation: fadeUp 1s ease both;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(82,183,136,0.2); border: 1px solid rgba(82,183,136,0.4);
+      color: var(--green-pale);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+    .hero-content h1 em {
+      font-style: italic; color: var(--water-light);
+    }
+    .hero-content p {
+      font-size: 1.15rem; line-height: 1.75;
+      color: #a8c8b0; max-width: 580px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green-light); color: var(--green-deep);
+      padding: 0.9rem 2rem; border-radius: 100px;
+      font-weight: 600; font-size: 0.95rem; text-decoration: none;
+      transition: all 0.25s; letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: var(--green-pale); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(82,183,136,0.4); }
+    .btn-outline {
+      border: 1.5px solid rgba(255,255,255,0.3); color: #fff;
+      padding: 0.9rem 2rem; border-radius: 100px;
+      font-weight: 500; font-size: 0.95rem; text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-outline:hover { border-color: var(--green-pale); color: var(--green-pale); }
+    .hero-stats {
+      position: absolute; right: 4rem; bottom: 4rem;
+      display: flex; gap: 3rem; z-index: 2;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; color: var(--green-pale); font-weight: 700;
+    }
+    .stat-label { font-size: 0.75rem; color: #7aab8a; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+    /* ─── SECTIONS SHARED ─── */
+    section { padding: 7rem 4rem; }
+    .section-tag {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--green-mid);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.2; color: var(--green-deep);
+      margin-bottom: 1.2rem;
+    }
+    .section-title span { color: var(--green-mid); }
+    .section-lead {
+      font-size: 1.1rem; line-height: 1.8; color: var(--text-mid);
+      max-width: 600px;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center;
+    }
+    .about-visual {
+      position: relative; height: 520px;
+    }
+    .about-card {
+      position: absolute; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(26,61,43,0.15);
+    }
+    .about-card.main {
+      width: 75%; height: 400px; bottom: 0; right: 0;
+      background: linear-gradient(135deg, var(--green-mid), var(--green-deep));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-card.accent {
+      width: 55%; height: 260px; top: 0; left: 0;
+      background: linear-gradient(135deg, var(--water), #005f8f);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-inner { padding: 2rem; color: white; }
+    .card-inner h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 0.6rem; }
+    .card-inner p { font-size: 0.9rem; opacity: 0.85; line-height: 1.6; }
+    .about-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .about-text p { margin-bottom: 1.2rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .values-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
+    }
+    .value-pill {
+      background: var(--sand); border-radius: 12px;
+      padding: 1rem 1.2rem; display: flex; align-items: center; gap: 0.7rem;
+      font-size: 0.88rem; font-weight: 500; color: var(--green-deep);
+    }
+    .value-pill .icon { font-size: 1.2rem; }
+
+    /* ─── MISSION ─── */
+    #mission {
+      background: var(--green-deep);
+      color: white; text-align: center;
+    }
+    #mission .section-tag { color: var(--green-pale); }
+    #mission .section-title { color: white; margin: 0 auto 1rem; }
+    #mission .section-lead { color: #a8c8b0; margin: 0 auto 4rem; }
+    .objectives-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .obj-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 1.8rem; text-align: left;
+      transition: all 0.3s; cursor: default;
+    }
+    .obj-card:hover {
+      background: rgba(255,255,255,0.1); transform: translateY(-4px);
+      border-color: rgba(82,183,136,0.4);
+    }
+    .obj-num {
+      font-family: 'Playfair Display', serif; font-size: 2.5rem;
+      color: rgba(82,183,136,0.3); font-weight: 700; line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+    .obj-card h4 { font-size: 1rem; font-weight: 600; color: var(--green-pale); margin-bottom: 0.6rem; }
+    .obj-card p { font-size: 0.88rem; color: #8ab8a0; line-height: 1.6; }
+
+    /* ─── AREAS ─── */
+    #areas { background: var(--sand); }
+    .areas-intro { max-width: 700px; margin-bottom: 4rem; }
+    .areas-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    }
+    .area-card {
+      background: white; border-radius: 20px;
+      overflow: hidden; transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    }
+    .area-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(26,61,43,0.15); }
+    .area-stripe {
+      height: 6px;
+    }
+    .area-body { padding: 1.8rem; }
+    .area-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+    .area-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-deep); margin-bottom: 0.6rem; }
+    .area-card p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
+
+    /* ─── GET INVOLVED ─── */
+    #involucrate {
+      background: var(--cream);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .involve-block h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.6rem;
+      color: var(--green-deep); margin-bottom: 0.8rem;
+    }
+    .involve-block p { color: var(--text-mid); line-height: 1.7; margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .involve-list { list-style: none; margin-bottom: 1.8rem; }
+    .involve-list li {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--sand-dark);
+      font-size: 0.9rem; color: var(--text-mid);
+    }
+    .involve-list li::before { content: "→"; color: var(--green-light); font-weight: 700; flex-shrink: 0; margin-top: 0.05rem; }
+    .donate-highlight {
+      background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+      border-radius: 20px; padding: 2.5rem; color: white; margin-top: 2rem;
+    }
+    .donate-highlight h4 { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .donate-highlight p { font-size: 0.9rem; color: #a8c8b0; line-height: 1.6; margin-bottom: 1.5rem; }
+    .donation-tiers { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .tier {
+      border: 1.5px solid rgba(255,255,255,0.25); color: white;
+      padding: 0.4rem 1rem; border-radius: 100px;
+      font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+    }
+    .tier:hover, .tier.active { background: var(--green-light); border-color: var(--green-light); color: var(--green-deep); }
+
+    /* ─── TEAM ─── */
+    #equipo { background: var(--sand); }
+    .team-intro { max-width: 600px; margin-bottom: 4rem; }
+    .team-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
+    }
+    .team-card {
+      background: white; border-radius: 20px; padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: all 0.3s;
+    }
+    .team-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(26,61,43,0.12); }
+    .team-avatar {
+      width: 90px; height: 90px; border-radius: 50%;
+      margin: 0 auto 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+    }
+    .team-card h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--green-deep); margin-bottom: 0.3rem; }
+    .team-role { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-mid); margin-bottom: 0.8rem; }
+    .team-card p { font-size: 0.86rem; color: var(--text-mid); line-height: 1.6; }
+
+    /* ─── CONTACT ─── */
+    #contacto {
+      background: var(--green-deep); color: white;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start;
+    }
+    #contacto .section-tag { color: var(--green-pale); }
+    #contacto .section-title { color: white; }
+    #contacto .section-lead { color: #a8c8b0; }
+    .contact-details { margin-top: 2rem; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .contact-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .contact-item div h5 { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-pale); margin-bottom: 0.2rem; }
+    .contact-item div p, .contact-item div a { font-size: 0.92rem; color: #c8dfc8; text-decoration: none; }
+    .contact-form { background: rgba(255,255,255,0.06); border-radius: 20px; padding: 2.5rem; }
+    .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--green-pale); display: block; margin-bottom: 0.4rem; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+      color: white; border-radius: 10px; padding: 0.8rem 1rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.35); }
+    .form-group select option { background: var(--green-deep); }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green-light); }
+    .form-group textarea { height: 110px; resize: none; }
+    .btn-send {
+      width: 100%; background: var(--green-light); color: var(--green-deep);
+      border: none; border-radius: 100px; padding: 0.9rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all 0.25s; letter-spacing: 0.02em;
+    }
+    .btn-send:hover { background: var(--green-pale); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0d2018; color: #6a8a72;
+      padding: 3rem 4rem;
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2rem;
+    }
+    footer .foot-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--green-pale); margin-bottom: 0.4rem; }
+    footer p { font-size: 0.82rem; }
+    .social-links { display: flex; gap: 0.8rem; }
+    .social-link {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: #a8c8b0; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .social-link:hover { border-color: var(--green-light); color: var(--green-light); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      nav ul { gap: 1.2rem; }
+      section { padding: 5rem 2rem; }
+      #hero { padding: 0 2rem; }
+      #about, #involucrate, #contacto { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { height: 280px; }
+      .about-card.main { width: 65%; height: 240px; }
+      .about-card.accent { width: 50%; height: 180px; }
+      .objectives-grid, .areas-grid, .team-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { position: static; margin-top: 3rem; justify-content: flex-start; }
+      footer { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .objectives-grid, .areas-grid, .team-grid { grid-template-columns: 1fr; }
+      .hero-content h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">GESAS<span>.</span></div>
+  <ul>
+    <li><a href="#about">Nosotros</a></li>
+    <li><a href="#mission">Misión</a></li>
+    <li><a href="#areas">Áreas</a></li>
+    <li><a href="#involucrate">Participa</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#contacto" class="nav-cta">Contáctanos</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🌿 Cuenca, Ecuador · Fundada 2025</span>
+    <h1>Cuidando el <em>agua</em> que nos da vida</h1>
+    <p>La Fundación GESAS trabaja por la gestión sostenible del agua y los recursos naturales de Ecuador mediante ciencia, innovación y alianzas comunitarias.</p>
+    <div class="hero-actions">
+      <a href="#involucrate" class="btn-primary">Apóyanos</a>
+      <a href="#mission" class="btn-outline">Conoce nuestra misión</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Fundadores Ph.D.</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Objetivos Estratégicos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Impacto a largo plazo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual">
+    <div class="about-card accent">
+      <div class="card-inner">
+        <span class="about-icon">💧</span>
+        <h3>Gestión Hídrica</h3>
+        <p>Monitoreo, modelación y planificación de cuencas hidrográficas</p>
+      </div>
+    </div>
+    <div class="about-card main">
+      <div class="card-inner">
+        <span class="about-icon">🌱</span>
+        <h3>Soluciones Basadas en la Naturaleza</h3>
+        <p>Restauración ecológica y adaptación al cambio climático con enfoque en biodiversidad</p>
+      </div>
+    </div>
+  </div>
+  <div class="about-text">
+    <p class="section-tag">Quiénes somos</p>
+    <h2 class="section-title">Una fundación <span>técnica y comprometida</span> con el territorio</h2>
+    <p class="section-lead">La Fundación para la Gestión del Agua y Sostenibilidad (GESAS) es una organización ecuatoriana de derecho privado sin fines de lucro, creada por profesionales con doctorado en ciencias ambientales e ingeniería, con amplia experiencia en proyectos de campo en el Ecuador.</p>
+    <p style="color:var(--text-mid); font-size:0.95rem; line-height:1.8; margin-top:1rem;">Nacemos con la convicción de que la ciencia aplicada, la participación comunitaria y la innovación tecnológica son las herramientas para enfrentar la crisis hídrica y climática que amenaza los ecosistemas andinos y amazónicos.</p>
+    <div class="values-grid">
+      <div class="value-pill"><span class="icon">🔬</span> Ciencia aplicada</div>
+      <div class="value-pill"><span class="icon">🤝</span> Participación comunitaria</div>
+      <div class="value-pill"><span class="icon">🗺️</span> SIG y teledetección</div>
+      <div class="value-pill"><span class="icon">⚖️</span> Equidad e inclusión</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section id="mission">
+  <p class="section-tag">Nuestra misión</p>
+  <h2 class="section-title" style="max-width:700px; margin:0 auto 1rem;">Contribuir a la <span style="color:var(--green-light)">gestión sostenible</span> del ambiente y los recursos naturales</h2>
+  <p class="section-lead">A través del diseño, implementación y promoción de proyectos de investigación, monitoreo e innovación en gestión hídrica, conservación de biodiversidad, restauración ecológica y cambio climático.</p>
+  <div class="objectives-grid">
+    <div class="obj-card">
+      <div class="obj-num">01</div>
+      <h4>Investigación y Acción Participativa</h4>
+      <p>Proyectos de investigación aplicada para fortalecer la gestión de cuencas hidrográficas y la resiliencia de ecosistemas frente al cambio climático.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">02</div>
+      <h4>Fortalecimiento de Capacidades</h4>
+      <p>Programas de educación, capacitación y asistencia técnica con herramientas innovadoras como monitoreo ambiental y SIG.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">03</div>
+      <h4>Soluciones Basadas en Naturaleza</h4>
+      <p>Impulsar estrategias de restauración ecológica para mejorar la gestión del agua y la adaptación al cambio climático.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">04</div>
+      <h4>Alianzas Estratégicas</h4>
+      <p>Redes de colaboración con instituciones públicas, academia, sociedad civil y organismos de cooperación nacional e internacional.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">05</div>
+      <h4>Gestión del Conocimiento</h4>
+      <p>Generar y difundir conocimiento técnico-científico y buenas prácticas sobre gestión ambiental e hídrica promoviendo la innovación.</p>
+    </div>
+    <div class="obj-card">
+      <div class="obj-num">06</div>
+      <h4>Inclusión y Equidad</h4>
+      <p>Garantizar el acceso igualitario a información, capacitación y beneficios derivados de los proyectos ambientales que implementemos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section id="areas">
+  <div class="areas-intro">
+    <p class="section-tag">Áreas de trabajo</p>
+    <h2 class="section-title">Lo que hacemos en el <span>campo</span></h2>
+    <p class="section-lead">Nuestros programas integran la mejor ciencia disponible con el conocimiento local, para generar soluciones reales en los territorios donde trabajamos.</p>
+  </div>
+  <div class="areas-grid">
+    <div class="area-card">
+      <div class="area-stripe" style="background:linear-gradient(90deg, #0077b6, #00b4d8)"></div>
+      <div class="area-body">
+        <span class="area-icon">💧</span>
+        <h3>Recursos Hídricos</h3>
+        <p>Evaluación, planificación y monitoreo de cuencas hidrográficas. Modelos hidrológicos e hidrodinámicos para garantizar la calidad y cantidad del agua en comunidades y ecosistemas.</p>
+      </div>
+    </div>
+    <div class="area-card">
+      <div class="area-stripe" style="background:linear-gradient(90deg, #52b788, #1a7a4a)"></div>
+      <div class="area-body">
+        <span class="area-icon">🌿</span>
+        <h3>Conservación y Biodiversidad</h3>
+        <p>Conservación de suelos, bosques andinos y ecosistemas estratégicos. Inventarios biológicos, planes de manejo y corredores de biodiversidad.</p>
+      </div>
+    </div>
+    <div class="area-card">
+      <div class="area-stripe" style="background:linear-gradient(90deg, #e76f51, #f4a261)"></div>
+      <div class="area-body">
+        <span class="area-icon">🌡️</span>
+        <h3>Cambio Climático</h3>
+        <p>Análisis de vulnerabilidad, estrategias de adaptación y mitigación. Reducción de riesgos ambientales y evaluación de impactos del cambio climático en cuencas hidrográficas.</p>
+      </div>
+    </div>
+    <div class="area-card">
+      <div class="area-stripe" style="background:linear-gradient(90deg, #6a994e, #a7c957)"></div>
+      <div class="area-body">
+        <span class="area-icon">🌳</span>
+        <h3>Restauración Ecológica</h3>
+        <p>Implementación de Soluciones Basadas en la Naturaleza (SbN). Restauración de paisajes degradados, revegetación de riberas y zonas de recarga hídrica.</p>
+      </div>
+    </div>
+    <div class="area-card">
+      <div class="area-stripe" style="background:linear-gradient(90deg, #9b5de5, #c77dff)"></div>
+      <div class="area-body">
+        <span class="area-icon">🗺️</span>
+        <h3>Innovación y Tecnología</h3>
+        <p>Sistemas de información geográfica (SIG), teledetección, monitoreo remoto y modelación ambiental para la toma de decisiones basada en evidencia.</p>
+      </div>
+    </div>
+    <div class="area-card">
+      <div class="area-stripe" style="background:linear-gradient(90deg, #f4a261, #e9c46a)"></div>
+      <div class="area-body">
+        <span class="area-icon">📚</span>
+        <h3>Educación Ambiental</h3>
+        <p>Programas de capacitación para actores locales, asistencia técnica a comunidades, escuelas y gobiernos locales. Talleres, cursos y diplomados en gestión ambiental.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GET INVOLVED -->
+<section id="involucrate">
+  <div>
+    <p class="section-tag">Únete</p>
+    <h2 class="section-title">Sé parte del <span>cambio</span></h2>
+    <div class="involve-block">
+      <h3>🎓 Pasantías y Voluntariado</h3>
+      <p>Buscamos estudiantes de pregrado y posgrado en ciencias ambientales, ingeniería ambiental, biología, geografía, hidrología y afines que quieran ganar experiencia real en proyectos de campo.</p>
+      <ul class="involve-list">
+        <li>Participación en proyectos de monitoreo hidrológico</li>
+        <li>Análisis de datos con SIG y herramientas de modelación</li>
+        <li>Apoyo en talleres comunitarios de educación ambiental</li>
+        <li>Elaboración de reportes técnicos y publicaciones científicas</li>
+        <li>Mentoring de profesionales con doctorado</li>
+      </ul>
+      <a href="#contacto" class="btn-primary" style="display:inline-block;">Quiero ser voluntario/a</a>
+    </div>
+    <div class="involve-block" style="margin-top:3rem;">
+      <h3>🤝 Alianzas Institucionales</h3>
+      <p>¿Eres parte de una universidad, empresa o institución pública? Podemos colaborar en proyectos de investigación, consultoría técnica, monitoreo ambiental o programas de responsabilidad social.</p>
+      <a href="#contacto" class="btn-outline" style="display:inline-block; border-color: var(--green-mid); color: var(--green-mid);">Proponer una alianza</a>
+    </div>
+  </div>
+  <div>
+    <div class="donate-highlight">
+      <h4>💚 Apoya nuestra misión</h4>
+      <p>Tu donación financia proyectos de investigación aplicada, programas de restauración ecológica y capacitación comunitaria en las cuencas hidrográficas del Ecuador.</p>
+      <p style="font-size:0.82rem; margin-top:-0.5rem; margin-bottom:1.2rem;">Con tu aporte, la Fundación GESAS puede desarrollar proyectos con impacto medible en el territorio.</p>
+      <div class="donation-tiers">
+        <div class="tier">$25</div>
+        <div class="tier active">$50</div>
+        <div class="tier">$100</div>
+        <div class="tier">$250</div>
+        <div class="tier">Otro</div>
+      </div>
+      <a href="#contacto" class="btn-primary" style="display:inline-block; width:100%; text-align:center;">Donar ahora</a>
+    </div>
+    <div style="background:var(--sand); border-radius:20px; padding:2rem; margin-top:1.5rem;">
+      <h4 style="font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--green-deep); margin-bottom:0.8rem;">🌍 ¿Por qué donar a GESAS?</h4>
+      <ul class="involve-list">
+        <li>Equipo fundador con doctorados en ciencias ambientales</li>
+        <li>Proyectos basados en evidencia científica rigurosa</li>
+        <li>Transparencia total en el uso de los fondos</li>
+        <li>Impacto directo en comunidades y ecosistemas ecuatorianos</li>
+        <li>Organización legalmente constituida con personería jurídica</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="equipo">
+  <div class="team-intro">
+    <p class="section-tag">Nuestro equipo</p>
+    <h2 class="section-title">Las personas detrás de <span>GESAS</span></h2>
+    <p class="section-lead">Somos tres ingenieros con doctorado, apasionados por la ciencia aplicada al servicio del agua y la vida.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#0077b6,#005f8f)">🔬</div>
+      <h4>Ing. Sebastián Cedillo, Ph.D.</h4>
+      <div class="team-role">Presidente</div>
+      <p>Especialista en hidrología, modelación de cuencas y gestión integrada de recursos hídricos. Lidera los proyectos de investigación aplicada de la Fundación.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#52b788,#1a7a4a)">🌿</div>
+      <h4>Ing. María Augusta Bermeo, M.Sc.</h4>
+      <div class="team-role">Vicepresidenta</div>
+      <p>Experta en gestión ambiental y sostenibilidad. Coordina la vinculación institucional y la gestión financiera de los proyectos.</p>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar" style="background:linear-gradient(135deg,#6a994e,#a7c957)">🌱</div>
+      <h4>Ing. Gina Berrones, Ph.D.</h4>
+      <div class="team-role">Directora Ejecutiva</div>
+      <p>Especialista en soluciones basadas en la naturaleza, restauración ecológica y conservación de la biodiversidad. Dirige la representación legal de la Fundación.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contacto">
+  <div>
+    <p class="section-tag">Contacto</p>
+    <h2 class="section-title">Hablemos de <span style="color:var(--green-light)">proyectos</span></h2>
+    <p class="section-lead">Ya sea que quieras apoyarnos, colaborar o simplemente conocer más, estamos aquí para conversar.</p>
+    <div class="contact-details">
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <div>
+          <h5>Domicilio</h5>
+          <p>Primero de Mayo y Juan Luis Vives, Urb. Piedra 2, Casa 6<br>Yanuncay, Cuenca, Azuay – Ecuador</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📧</span>
+        <div>
+          <h5>Correo electrónico</h5>
+          <a href="mailto:fundacion.gesas@gmail.com">fundacion.gesas@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📞</span>
+        <div>
+          <h5>Teléfono</h5>
+          <p>0984442600 · (07) 2174230</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">🌐</span>
+        <div>
+          <h5>Redes sociales</h5>
+          <p>@FundacionGESAS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="contact-form">
+    <h3>Envíanos un mensaje</h3>
+    <div class="form-group">
+      <label>Nombre completo</label>
+      <input type="text" placeholder="Tu nombre"/>
+    </div>
+    <div class="form-group">
+      <label>Correo electrónico</label>
+      <input type="email" placeholder="tu@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>Motivo de contacto</label>
+      <select>
+        <option value="">Selecciona una opción...</option>
+        <option>Quiero ser voluntario/a</option>
+        <option>Quiero hacer una donación</option>
+        <option>Proponer una alianza institucional</option>
+        <option>Consulta técnica o colaboración</option>
+        <option>Información general</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Mensaje</label>
+      <textarea placeholder="Cuéntanos cómo podemos colaborar..."></textarea>
+    </div>
+    <button class="btn-send">Enviar mensaje →</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="foot-logo">Fundación GESAS</div>
+    <p>Fundación para la Gestión del Agua y Sostenibilidad · Cuenca, Ecuador · 2025</p>
+    <p style="margin-top:0.4rem;">fundacion.gesas@gmail.com · (07) 2174230</p>
+  </div>
+  <div>
+    <div class="social-links">
+      <a href="#" class="social-link" title="Facebook">f</a>
+      <a href="#" class="social-link" title="Instagram">📷</a>
+      <a href="#" class="social-link" title="LinkedIn">in</a>
+      <a href="#" class="social-link" title="X / Twitter">𝕏</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Donation tier toggle
+  document.querySelectorAll('.tier').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.tier').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+    });
+  });
+
+  // Intersection observer for fade-in
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.obj-card, .area-card, .team-card, .value-pill').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
