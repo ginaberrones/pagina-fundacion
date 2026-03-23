@@ -76,9 +76,13 @@
     /* ─── HERO ─── */
     #hero {
       min-height: 100vh;
-      background:
-        linear-gradient(160deg, rgba(10,35,20,0.72) 0%, rgba(0,60,30,0.55) 60%, rgba(0,80,60,0.45) 100%),
-        url(../images/hero-bg.jpg) center/cover no-repeat;
+      background-image:
+        linear-gradient(160deg, rgba(10,35,20,0.42) 0%, rgba(0,60,30,0.32) 60%, rgba(0,80,60,0.28) 100%),
+        url(../images/hero-bg.jpg);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: scroll;
       display: flex; align-items: center; flex-wrap: wrap;
       padding: 7rem 4rem 4rem;
       position: relative; overflow: hidden;
@@ -96,11 +100,12 @@
     }
     .hero-badge {
       display: inline-block;
-      background: rgba(82,183,136,0.2); border: 1px solid rgba(82,183,136,0.4);
-      color: var(--green-pale);
+      background: rgba(10,30,15,0.6); border: 1px solid rgba(82,183,136,0.5);
+      color: #e0f5e9;
       font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
       text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 100px;
       margin-bottom: 1.5rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
     }
     .hero-content h1 {
       font-family: 'Playfair Display', serif;
@@ -108,14 +113,17 @@
       line-height: 1.1;
       color: #fff;
       margin-bottom: 1.5rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
     }
     .hero-content h1 em {
-      font-style: italic; color: var(--water-light);
+      font-style: italic; color: #90e0ef;
+      text-shadow: 0 2px 10px rgba(0,80,120,0.6);
     }
     .hero-content p {
       font-size: 1.15rem; line-height: 1.75;
-      color: #a8c8b0; max-width: 580px;
+      color: #e8f5ec; max-width: 580px;
       margin-bottom: 2.5rem;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.65);
     }
     .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn-primary {
@@ -385,9 +393,17 @@
       section { padding: 5rem 2rem; }
       #hero { padding: 6rem 2rem 3rem; min-height: 100vh; flex-direction: column; justify-content: center; align-items: flex-start; }
       #about, #involucrate, #contacto { grid-template-columns: 1fr; gap: 3rem; }
-      .about-visual { height: 280px; }
-      .about-card.main { width: 65%; height: 240px; }
-      .about-card.accent { width: 50%; height: 180px; }
+      .about-visual {
+        height: auto;
+        display: flex; flex-direction: column; gap: 1rem;
+      }
+      .about-card {
+        position: static;
+        width: 100% !important;
+        height: auto !important;
+        transform: none !important;
+      }
+      .card-inner { padding: 1.5rem; }
       .objectives-grid, .areas-grid, .team-grid { grid-template-columns: 1fr 1fr; }
       .hero-stats {
         position: static;
